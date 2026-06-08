@@ -1,0 +1,353 @@
+{
+  "root_node": "10",
+  "build_id": "18b63acdb198ccf3-82d94e66",
+  "patch_targets": {
+    "inlet": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "outlet_33": [
+      4.0,
+      0.0,
+      2.0
+    ],
+    "outlet_43": [
+      3.9999999999999996,
+      -1.0,
+      2.0
+    ],
+    "outlet_53": [
+      3.9999999999999996,
+      1.0,
+      2.0
+    ]
+  },
+  "counts": {
+    "primitives": 14,
+    "elbows": 3,
+    "reducers": 3,
+    "pipes": 7
+  },
+  "primitives": [
+    {
+      "name": "pipe_100",
+      "type": "cylinder",
+      "role": "pipe_segment",
+      "radius_m": 0.125,
+      "start_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "end_m": [
+        1.875,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "pipe_120",
+      "type": "cylinder",
+      "role": "pipe_segment",
+      "radius_m": 0.125,
+      "start_m": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "end_m": [
+        2.0,
+        -0.875,
+        2.0
+      ]
+    },
+    {
+      "name": "pipe_130",
+      "type": "cylinder",
+      "role": "pipe_segment",
+      "radius_m": 0.125,
+      "start_m": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "end_m": [
+        2.0,
+        0.875,
+        2.0
+      ]
+    },
+    {
+      "name": "pipe_140",
+      "type": "cylinder",
+      "role": "pipe_segment",
+      "radius_m": 0.125,
+      "start_m": [
+        2.0,
+        0.0,
+        2.0
+      ],
+      "end_m": [
+        2.01,
+        0.0,
+        2.0
+      ]
+    },
+    {
+      "name": "pipe_141",
+      "type": "cylinder",
+      "role": "pipe_segment",
+      "radius_m": 0.125,
+      "start_m": [
+        2.01,
+        0.0,
+        2.0
+      ],
+      "end_m": [
+        3.518995209,
+        0.0,
+        2.0
+      ]
+    },
+    {
+      "name": "pipe_151",
+      "type": "cylinder",
+      "role": "pipe_segment",
+      "radius_m": 0.125,
+      "start_m": [
+        2.125,
+        -1.0,
+        2.0
+      ],
+      "end_m": [
+        3.9949748539999996,
+        -1.0,
+        2.0
+      ]
+    },
+    {
+      "name": "pipe_161",
+      "type": "cylinder",
+      "role": "pipe_segment",
+      "radius_m": 0.125,
+      "start_m": [
+        2.125,
+        1.0,
+        2.0
+      ],
+      "end_m": [
+        3.9949748539999996,
+        1.0,
+        2.0
+      ]
+    },
+    {
+      "name": "elbow_20",
+      "type": "elbow_sweep",
+      "role": "elbow_sweep",
+      "corner_m": [
+        2.0,
+        0.0,
+        0.0
+      ],
+      "incoming_direction": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "outgoing_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "arc_start_m": [
+        1.875,
+        0.0,
+        0.0
+      ],
+      "arc_end_m": [
+        2.0,
+        0.0,
+        0.125
+      ],
+      "arc_center_m": [
+        1.875,
+        0.0,
+        0.125
+      ],
+      "arc_bend_radius_m": 0.125,
+      "arc_tube_radius_m": 0.125,
+      "start_m": [
+        1.875,
+        0.0,
+        0.0
+      ],
+      "end_m": [
+        2.0,
+        0.0,
+        0.125
+      ]
+    },
+    {
+      "name": "elbow_40",
+      "type": "elbow_sweep",
+      "role": "elbow_sweep",
+      "corner_m": [
+        2.0,
+        -1.0,
+        2.0
+      ],
+      "incoming_direction": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "outgoing_direction": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arc_start_m": [
+        2.0,
+        -0.875,
+        2.0
+      ],
+      "arc_end_m": [
+        2.125,
+        -1.0,
+        2.0
+      ],
+      "arc_center_m": [
+        2.125,
+        -0.875,
+        2.0
+      ],
+      "arc_bend_radius_m": 0.125,
+      "arc_tube_radius_m": 0.125,
+      "start_m": [
+        2.0,
+        -0.875,
+        2.0
+      ],
+      "end_m": [
+        2.125,
+        -1.0,
+        2.0
+      ]
+    },
+    {
+      "name": "elbow_50",
+      "type": "elbow_sweep",
+      "role": "elbow_sweep",
+      "corner_m": [
+        2.0,
+        1.0,
+        2.0
+      ],
+      "incoming_direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "outgoing_direction": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arc_start_m": [
+        2.0,
+        0.875,
+        2.0
+      ],
+      "arc_end_m": [
+        2.125,
+        1.0,
+        2.0
+      ],
+      "arc_center_m": [
+        2.125,
+        0.875,
+        2.0
+      ],
+      "arc_bend_radius_m": 0.125,
+      "arc_tube_radius_m": 0.125,
+      "start_m": [
+        2.0,
+        0.875,
+        2.0
+      ],
+      "end_m": [
+        2.125,
+        1.0,
+        2.0
+      ]
+    },
+    {
+      "name": "pipe_110_after_elbow",
+      "type": "cylinder",
+      "radius_m": 0.125,
+      "start_m": [
+        2.0,
+        0.0,
+        0.12499999999999999
+      ],
+      "end_m": [
+        2.0,
+        0.0,
+        2.0
+      ]
+    },
+    {
+      "name": "reducer_142",
+      "type": "cone",
+      "role": "reducer",
+      "radius1_m": 0.125,
+      "radius2_m": 0.0715550232,
+      "start_m": [
+        3.518995209,
+        0.0,
+        2.0
+      ],
+      "end_m": [
+        4.0,
+        0.0,
+        2.0
+      ]
+    },
+    {
+      "name": "reducer_152",
+      "type": "cone",
+      "role": "reducer",
+      "radius1_m": 0.125,
+      "radius2_m": 0.1244416504,
+      "start_m": [
+        3.9949748539999996,
+        -1.0,
+        2.0
+      ],
+      "end_m": [
+        3.9999999999999996,
+        -1.0,
+        2.0
+      ]
+    },
+    {
+      "name": "reducer_162",
+      "type": "cone",
+      "role": "reducer",
+      "radius1_m": 0.125,
+      "radius2_m": 0.1244416504,
+      "start_m": [
+        3.9949748539999996,
+        1.0,
+        2.0
+      ],
+      "end_m": [
+        3.9999999999999996,
+        1.0,
+        2.0
+      ]
+    }
+  ]
+}

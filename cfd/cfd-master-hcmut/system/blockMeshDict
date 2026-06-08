@@ -1,0 +1,95 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+
+convertToMeters 1;
+
+// Background mesh box with margin around STL bounds:
+// STL bounds from surfaceCheck: (0 -1.125 -0.124988) to (4 1.125 2.125)
+xMin -0.5;
+xMax 4.5;
+yMin -1.5;
+yMax 1.5;
+zMin -0.5;
+zMax 2.5;
+
+nx 80;
+ny 48;
+nz 48;
+
+vertices
+(
+    ($xMin $yMin $zMin)
+    ($xMax $yMin $zMin)
+    ($xMax $yMax $zMin)
+    ($xMin $yMax $zMin)
+    ($xMin $yMin $zMax)
+    ($xMax $yMin $zMax)
+    ($xMax $yMax $zMax)
+    ($xMin $yMax $zMax)
+);
+
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) ($nx $ny $nz) simpleGrading (1 1 1)
+);
+
+edges
+(
+);
+
+boundary
+(
+    xMin
+    {
+        type patch;
+        faces
+        (
+            (0 3 7 4)
+        );
+    }
+    xMax
+    {
+        type patch;
+        faces
+        (
+            (1 5 6 2)
+        );
+    }
+    yMin
+    {
+        type patch;
+        faces
+        (
+            (0 4 5 1)
+        );
+    }
+    yMax
+    {
+        type patch;
+        faces
+        (
+            (3 2 6 7)
+        );
+    }
+    zMin
+    {
+        type patch;
+        faces
+        (
+            (0 1 2 3)
+        );
+    }
+    zMax
+    {
+        type patch;
+        faces
+        (
+            (4 7 6 5)
+        );
+    }
+);

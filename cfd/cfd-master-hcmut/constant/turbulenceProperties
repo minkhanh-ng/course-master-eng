@@ -1,0 +1,18 @@
+FoamFile {
+    version 2.0;
+    format ascii;
+    class dictionary;
+    object turbulenceProperties;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+simulationType RAS;
+
+RAS {
+    // Choose your model here:
+    RASModel kEpsilon; // OR change to: kOmegaSST
+
+    turbulence on;
+    printCoeffs on;
+}

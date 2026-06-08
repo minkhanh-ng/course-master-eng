@@ -1,0 +1,92 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _9a9aeb73-20260127 OPENFOAM=2312 patch=260127 version=2312
+Arch   : "LSB;label=32;scalar=64"
+Exec   : surfaceCheck constant/triSurface/manifold.stl
+Date   : Jun 07 2026
+Time   : 14:04:30
+Host   : PC17
+PID    : 1383965
+I/O    : uncollated
+Case   : /home/kng/OpenFOAM/cfd-master-hcmut
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Reading surface from "constant/triSurface/manifold.stl" ...
+
+Statistics:
+Triangles    : 81934 in 5 region(s)
+Vertices     : 40969
+Bounding Box : (0 -1.125 -0.124988) (4 1.125 2.125)
+
+Region	Size
+------	----
+inlet	227
+wall	81026
+outlet_33	227
+outlet_43	227
+outlet_53	227
+
+
+Surface has no illegal triangles.
+
+Triangle quality (equilateral=1, collapsed=0):
+    0 .. 0.05  : 0.116106
+    0.05 .. 0.1  : 0.0306344
+    0.1 .. 0.15  : 0.0237752
+    0.15 .. 0.2  : 0.0224205
+    0.2 .. 0.25  : 0.0181121
+    0.25 .. 0.3  : 0.0306466
+    0.3 .. 0.35  : 0.0392023
+    0.35 .. 0.4  : 0.0307076
+    0.4 .. 0.45  : 0.0166964
+    0.45 .. 0.5  : 0.0421315
+    0.5 .. 0.55  : 0.0511875
+    0.55 .. 0.6  : 0.0393243
+    0.6 .. 0.65  : 0.156895
+    0.65 .. 0.7  : 0.118486
+    0.7 .. 0.75  : 0.1427
+    0.75 .. 0.8  : 0.118779
+    0.8 .. 0.85  : 0.000598042
+    0.85 .. 0.9  : 0.000817731
+    0.9 .. 0.95  : 0.000451583
+    0.95 .. 1  : 0.000329534
+
+    min 1.06829e-07 for triangle 27859
+    max 0.991721 for triangle 66150
+
+Edges:
+    min 1.0942e-06 for edge 1609 points (2.12498 0.875042 2.00338)(2.12498 0.875041 2.00338)
+    max 1.875 for edge 72619 points (1.875 -0.0880847 -0.088691)(0 -0.0904847 -0.0862411)
+
+Checking for points less than 1e-6 of bounding box ((4 2.24999 2.24999) metre) apart.
+    small edge between points 15173 (1.875 0.00341435 0.124953) and 15171 (1.875 0.00341435 0.124953) distance:1.79076e-06
+    small edge between points 15883 (1.87505 0.00341435 0.124995) and 15847 (1.87505 0.00341435 0.124993) distance:1.78919e-06
+    small edge between points 15017 (1.87505 0.00341435 0.125) and 15958 (1.87505 0.00341435 0.124998) distance:1.78814e-06
+    small edge between points 12174 (2.12481 0.875005 1.99315) and 12176 (2.12481 0.875 1.99315) distance:5.06639e-06
+    small edge between points 12228 (2.12481 0.87501 1.99315) and 12174 (2.12481 0.875005 1.99315) distance:5.072e-06
+    small edge between points 12279 (2.12481 0.875015 1.99315) and 12228 (2.12481 0.87501 1.99315) distance:5.08878e-06
+    small edge between points 12329 (2.12481 0.87502 1.99315) and 12279 (2.12481 0.875015 1.99315) distance:5.08878e-06
+    small edge between points 12378 (2.12481 0.875025 1.99315) and 12329 (2.12481 0.87502 1.99315) distance:5.08878e-06
+    small edge between points 12426 (2.12481 0.87503 1.99315) and 12378 (2.12481 0.875025 1.99315) distance:5.05762e-06
+    small edge between points 12473 (2.12482 0.875035 1.99315) and 12426 (2.12481 0.87503 1.99315) distance:5.09681e-06
+Suppressing further warning messages. Use -outputThreshold to increase number of warnings.
+Found 180 nearby points.
+
+Surface is closed. All edges connected to two faces.
+
+Number of unconnected parts : 1
+
+Number of zones (connected area with consistent normal) : 1
+
+
+End
+

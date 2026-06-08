@@ -1,0 +1,110 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+
+application     simpleFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         1000;
+
+deltaT          1;
+
+writeControl    timeStep;
+
+writeInterval   100;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+functions
+{
+    flowRateInlet
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        regionType      patch;
+        name            inlet;
+
+        writeControl    timeStep;
+        writeInterval   1;
+        writeFields     true;
+        surfaceFormat   vtk;
+        log             true;
+
+        fields          (U);
+        operation       areaNormalIntegrate;
+    }
+
+    flowRateOutlet33
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        regionType      patch;
+        name            outlet_33;
+
+        writeControl    timeStep;
+        writeInterval   1;
+        writeFields     true;
+        surfaceFormat   vtk;
+        log             true;
+
+        fields          (U);
+        operation       areaNormalIntegrate;
+    }
+
+    flowRateOutlet43
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        regionType      patch;
+        name            outlet_43;
+
+        writeControl    timeStep;
+        writeInterval   1;
+        writeFields     true;
+        surfaceFormat   vtk;
+        log             true;
+
+        fields          (U);
+        operation       areaNormalIntegrate;
+    }
+
+    flowRateOutlet53
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        regionType      patch;
+        name            outlet_53;
+
+        writeControl    timeStep;
+        writeInterval   1;
+        writeFields     true;
+        surfaceFormat   vtk;
+        log             true;
+
+        fields          (U);
+        operation       areaNormalIntegrate;
+    }
+}
