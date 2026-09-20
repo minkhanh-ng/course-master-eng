@@ -23,8 +23,8 @@ and stop the iteration after reaching $\varepsilon$
 
 ```python
 
-    if abs(x_next - x_current) < abs(x_current) * epsilon:
-        return x_next, iteration
+if abs(x_next - x_current) < abs(x_current) * epsilon:
+    return x_next, iteration
 
 ```
 
@@ -32,8 +32,8 @@ and stop the iteration after reaching $\varepsilon$
 
 ```python
 
-    def g(x: float) -> float:
-        return (2 * x - 1) ** 3 + 4 * (4 - 102.4 * x) ** 4
+def g(x: float) -> float:
+    return (2 * x - 1) ** 2 + 4 * (4 - 1024 * x) ** 4
 
 ```
 
@@ -41,11 +41,11 @@ The result is:
 
 ```shell
 
-    Secant method for 2.2
-    Group: Nguyen Minh Khanh & Truong Minh Son
-        root = 0.032496571602
-        g(root) = 4.52892390257e-10
-        iterations = 16
+Secant method for 2.2
+Group: Nguyen Minh Khanh & Truong Minh Son
+    root = 0.0038664094745
+    g(root) = 0.984605239109
+    iterations = 18
 
 ```
 ---
@@ -82,7 +82,7 @@ def secant(
 
 if __name__ == "__main__":
     def g(x: float) -> float:
-        return (2 * x - 1) ** 3 + 4 * (4 - 102.4 * x) ** 4
+        return (2 * x - 1) ** 2 + 4 * (4 - 1024 * x) ** 4
 
     root, iterations = secant(
         function=g,

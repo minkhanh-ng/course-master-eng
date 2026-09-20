@@ -27,7 +27,7 @@ def secant(
 
 if __name__ == "__main__":
     def g(x: float) -> float:
-        return (2 * x - 1) ** 3 + 4 * (4 - 102.4 * x) ** 4
+        return (2 * x - 1) ** 2 + 4 * (4 - 1024 * x) ** 4
 
     root, iterations = secant(
         function=g,
