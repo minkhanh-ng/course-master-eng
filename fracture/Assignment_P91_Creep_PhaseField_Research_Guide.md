@@ -96,22 +96,22 @@ Sổ quyết định mô hình cần chốt: stress dùng cho Norton và Cocks�
 
 ### 6.1. Cơ học
 
-\[
+$$
 \varepsilon=\operatorname{sym}\nabla u,
 \qquad \varepsilon^e=\varepsilon-\varepsilon^p-\varepsilon^{cr},
-\]
-\[
+$$
+$$
 \sigma'=\mathbb C_0:\varepsilon^e,
 \quad \sigma=g(d)\sigma',
 \quad g(d)=(1-d)^2+k_0.
-\]
+$$
 
 Dạng yếu cơ học:
 
-\[
+$$
 R_u(v)=\int_\Omega\sigma:\varepsilon(v)\,dx
 -\int_\Omega b\cdot v\,dx-\int_{\Gamma_t}\bar t\cdot v\,ds=0.
-\]
+$$
 
 Để loại rigid motion, chỉ ràng buộc các bậc tự do cần thiết. Không kẹp toàn mặt đầu thanh nếu mục tiêu là nghiệm kéo một trục đồng nhất với co Poisson tự do.
 
@@ -119,40 +119,40 @@ R_u(v)=\int_\Omega\sigma:\varepsilon(v)\,dx
 
 Với tensor ứng suất được chọn cho luật vật liệu:
 
-\[
+$$
 s=\sigma_{\rm law}-\tfrac13\operatorname{tr}(\sigma_{\rm law})I,
 \quad \sigma_{eq}=\sqrt{\tfrac32s:s},
 \quad \dot\varepsilon^{cr}=\tfrac32A\sigma_{eq}^{n-1}s.
-\]
-\[
+$$
+$$
 \dot{\bar\varepsilon}^{cr}=\sqrt{\tfrac23\dot\varepsilon^{cr}:\dot\varepsilon^{cr}},
 \quad \dot D=\dot{\bar\varepsilon}^{cr}/\varepsilon_f^*.
-\]
+$$
 
-Đặt alpha_n=(n−0.5)/(n+0.5), eta_tr=sigma_m/sigma_eq. Hai mô hình có thể thay thế:
+Đặt $\alpha_n=(n−0.5)/(n+0.5), \eta_tr=\sigma_m/\sigma_eq$. Hai mô hình có thể thay thế:
 
-\[
+$$
 F_{CA}=\frac{\sinh(2\alpha_n/3)}{\sinh(2\alpha_n\eta_{tr})},
 \qquad F_{WT}=\exp[2\alpha_n(1/3-\eta_{tr})],
 \quad \varepsilon_f^*=\varepsilon_fF.
-\]
+$$
 
-Cả hai cho F=1 ở kéo một trục. Miền eta_tr→0 của Cocks–Ashby cần xử lý bằng inverse ductility; không thay bằng cutoff tùy ý mà không ghi lại. Các trạng thái nén ngoài miền khảo sát phải được phát hiện, không âm thầm tạo damage âm. sigma_eq=0 cho không có J2 creep trong mô hình này; đây không phải mô tả đầy đủ cavity growth dưới hydrostatic tension.
+Cả hai cho F=1 ở kéo một trục. Miền eta_tr→0 của Cocks–Ashby cần xử lý bằng inverse ductility; không thay bằng cutoff tùy ý mà không ghi lại. Các trạng thái nén ngoài miền khảo sát phải được phát hiện, không âm thầm tạo damage âm. sigma_eq=0 đã cho không có J2 creep trong mô hình này; đây không phải mô tả đầy đủ cavity growth dưới hydrostatic tension.
 
 D đạt 1: chọn và ghi rõ quy tắc bão hòa D ở 1, hoặc dừng bài toán giới hạn. Nếu cần mô phỏng tiếp, cập nhật D có ràng buộc và báo thời điểm bão hòa; không để phép lũy thừa (1−D)^v dùng D>1. D=1 không tự thay thế tiêu chí vết nứt hay structural failure.
 
 ### 6.3. Crack-driving history và toughness
 
-\[
+$$
 W_p=\int\sigma':\dot\varepsilon^p\,dt,
 \quad W_{cr}=\int\sigma':\dot\varepsilon^{cr}\,dt,
 \quad \Psi_e=\tfrac12\varepsilon^e:\mathbb C_0:\varepsilon^e,
-\]
-\[
+$$
+$$
 H=\max_{\tau\le t}(\Psi_e+W_p+W_{cr}),
 \quad \beta(D)=(1-\beta_0)(1-D)^v+\beta_0,
 \quad \mathcal G=G_{c0}\beta(D).
-\]
+$$
 
 Công không đàn hồi được dùng làm driving contribution theo Ragab; không gọi toàn bộ nó là thế đàn hồi có thể thu hồi. UFL tự động vi phân không thay thế local return mapping hoặc cập nhật lịch sử tích phân thời gian.
 
@@ -160,27 +160,27 @@ Công không đàn hồi được dùng làm driving contribution theo Ragab; kh
 
 Năng lượng mặt nứt AT2:
 
-\[
+$$
 \Psi_f=\int_\Omega\mathcal G\left(\frac{d^2}{2\ell}+\frac\ell2|\nabla d|^2\right)dx.
-\]
+$$
 
 **V — dạng biến phân với D giữ cố định trong subproblem:**
 
-\[
+$$
 R_V(q)=\int_\Omega\left[
 \mathcal G\ell\nabla d\cdot\nabla q+
 \frac{\mathcal G}{\ell}dq-2(1-d)Hq+
 \eta_v\frac{d-d_n}{\Delta t}q\right]dx.
-\]
+$$
 
 **L — dạng Laplacian chuẩn hóa theo phương trình công bố:**
 
-\[
+$$
 R_L(q)=\int_\Omega\left[
 \nabla d\cdot\nabla q+
 \left(\frac d{\ell^2}-\frac{2(1-d)H}{\mathcal G\ell}
 +\frac{\eta_v}{\mathcal G\ell}\frac{d-d_n}{\Delta t}\right)q\right]dx.
-\]
+$$
 
 Không lấy R_V rồi chia từng tích phân cho G_eff để suy ra R_L khi G_eff biến thiên. Ở dạng strong, V có thêm −grad(log G_eff)·grad(d) sau chuẩn hóa. delta D=0 không có nghĩa grad D=0. Khi G_eff đồng nhất trong không gian, hai dạng tương đương ở mức liên tục nếu viscosity và boundary conditions tương ứng.
 
@@ -263,9 +263,9 @@ Thanh 2D hoặc 3D chịu traction; bắt đầu plane stress để thuận nghi
 
 (i) Traction hold: đối chiếu creep một trục. (ii) Giữ tổng biến dạng: đối chiếu stress relaxation của scalar elastic–Norton, không plasticity:
 
-\[
+$$
 \sigma(t)=\left[\sigma_0^{1-n}+(n-1)EA t\right]^{1/(1-n)}.
-\]
+$$
 
 Công thức trên chỉ cho uniaxial stress kinematics phù hợp, không áp dụng nguyên cho thanh 3D bị khóa tất cả strain ngang. Giải thích boundary conditions trước khi đối chiếu.
 
@@ -281,10 +281,10 @@ Dùng benchmark nứt đàn hồi có hình học/BC từ nguồn rõ. Tutorial 
 
 Không creep, không plasticity. Trên [0,L], đặt G_eff=G0 exp(kappa x), H=0, eta_v=0; profile chính xác của V:
 
-\[
+$$
 r_-=\frac{-\kappa-\sqrt{\kappa^2+4/\ell^2}}2,
 \quad d_V(x)=e^{r_-x}.
-\]
+$$
 
 Đặt **cùng BC** d(0)=1 và d(L)=exp(r_-L) cho cả V/L. Với L, nghiệm là a exp(−x/ell)+b exp(x/ell), a+b=1 và a exp(−L/ell)+b exp(L/ell)=exp(r_-L); tính ổn định số cho L/ell lớn. Không so hai mô hình với hai giá trị d(L) khác nhau.
 
@@ -337,10 +337,10 @@ Viscosity: kiểm tra ít nhất hai mức giảm, dt tương thích; phân bi�
 
 Lưu: external work, elastic energy theo quy ước suy giảm đã chọn, Psi_f, W_p, W_cr, viscous diagnostic và residual. Khi G_eff thay đổi:
 
-\[
+$$
 \dot\Psi_f=\int_\Omega\dot{\mathcal G}\gamma_\ell\,dx
 +\int_\Omega\mathcal G\left(\frac d\ell\dot d+\ell\nabla d\cdot\nabla\dot d\right)dx.
-\]
+$$
 
 Không bỏ integral đầu rồi gọi chênh lệch là lỗi solver. Phần năng lượng này giảm ngay trên vùng crack đã hình thành; cần giải thích bookkeeping và thermodynamic interpretation. Dẫn xuất đúng PF ở D frozen chưa chứng minh dissipative consistency toàn mô hình; assignment phải ghi giới hạn này và kiểm tra local/global balance trong các benchmark phù hợp.
 
@@ -388,10 +388,10 @@ Ba lớp nghiên cứu:
 
 Chỉ số thăm dò:
 
-\[
+$$
 \chi=\ell|\nabla\ln\mathcal G|,
 \quad \nabla\ln\mathcal G=\frac{\beta'(D)}{\beta(D)}\nabla D.
-\]
+$$
 
 chi là scaling indicator do dự án đề xuất, không threshold phổ quát. Hướng tương đối với grad d và crack path cũng quan trọng. Thống kê chi chỉ trong active crack/process zone; không lấy global maximum ở góc lưới làm đại diện.
 
