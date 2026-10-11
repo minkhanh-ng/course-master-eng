@@ -480,3 +480,59 @@ Sau verification CT/tấm, khảo sát áp suất và a0/t_wall, giữ material/
 4. Sau khi cả hai nền đúng, ghép M6 và thêm plasticity M7.
 
 Hai nghiên cứu sau này dùng chung nền verified, data pipeline và diagnostics. Không cần làm lại toàn bộ code; chỉ thay module ductility hoặc PF assembler theo cấu hình.
+
+# Phần nào dùng bộ giải FEniCSx, phần nào là code tự viết
+**Ta tự viết mô hình vật liệu và thuật toán ghép; FEniCSx/DOLFINx thực hiện phần tính toán phần tử hữu hạn.** PETSc giải các hệ đại số được tạo ra.
+
+FEniCSx là bộ công cụ; **DOLFINx** là thành phần quản lý lưới, trường phần tử hữu hạn và lắp ráp. **UFL** giúp viết dạng yếu; **PETSc** cung cấp các bộ giải tuyến tính, phi tuyến và bài toán có ràng buộc.
+
+| Thành phần trong assignment | Ta tự viết | Công cụ thực hiện |
+|---|---|---|
+| **Lưới và điều kiện biên** | Chọn hình học, tải, vùng biên và ràng buộc | Gmsh/DOLFINx tạo và quản lý lưới |
+| **Đàn hồi** | Viết \(\varepsilon(u)\), luật ứng suất và dạng yếu cân bằng | UFL biểu diễn; DOLFINx lắp ráp; PETSc giải |
+| **Luật creep Norton** | Tính tốc độ creep và cập nhật \(\varepsilon^{cr}\) | Code vật liệu Python/NumPy hoặc công cụ tích phân vật liệu |
+| **Cocks–Ashby/Wen–Tu** | Tính \(\varepsilon_f^*\) từ trạng thái ứng suất | Code tự viết |
+| **Damage \(D\)** | Tích phân \(\dot D\), xử lý giới hạn và lưu lịch sử | Code tự viết |
+| **Plasticity** | Return mapping, hardening, cập nhật biến nội tại và tangent | Code tự viết hoặc thư viện vật liệu phù hợp |
+| **Phase-field** | Viết dạng yếu V/L, \(g(d)\), \(\beta(D)\), \(H\) và điều kiện bất thuận nghịch | DOLFINx lắp ráp; PETSc giải |
+| **Ghép cơ học–phase-field** | Vòng lặp staggered, kiểm tra hội tụ | Code tự viết gọi các bộ giải |
+| **Tiến thời gian** | Chọn \(\Delta t\), trạng thái thử, commit/rollback | Code tự viết |
+| **Đánh giá kết quả** | Đo \(a(t)\), CMOD, sai số và kiểm tra hội tụ | Code tự viết; DOLFINx hỗ trợ tích phân và xuất trường |
+
+**Ví dụ với bài toán cơ học**
+
+Ta viết dạng yếu:
+
+\[
+R_u(v)=
+\int_\Omega
+\boldsymbol\sigma:\boldsymbol\varepsilon(v)\,dx
+-\int_{\Gamma_t}\bar{\boldsymbol t}\cdot\boldsymbol v\,ds.
+\]
+
+Sau đó:
+
+1. **Code vật liệu của ta** tính \(\boldsymbol\sigma\) từ biến dạng và lịch sử creep/plasticity.
+2. **DOLFINx** lắp ráp residual và Jacobian trên các phần tử.
+3. **PETSc** giải bước hiệu chỉnh chuyển vị.
+4. **Code điều khiển của ta** kiểm tra hội tụ và quyết định chấp nhận trạng thái.
+
+UFL có thể tự động vi phân các biểu thức được viết trong UFL. Nhưng nếu luật vật liệu được cập nhật bằng NumPy bên ngoài UFL, **nó không tự biết đạo hàm của thuật toán đó**; ta cần cung cấp tangent phù hợp hoặc chọn cách triển khai khác.
+
+**Ví dụ với phase-field**
+
+Ta tự quyết định dùng dạng V:
+
+\[
+\int_\Omega
+\left[
+\mathcal G\ell\nabla d\cdot\nabla q
++\frac{\mathcal G}{\ell}dq
+-2(1-d)Hq
++\eta_v\dot d\,q
+\right]dx=0,
+\]
+
+hay dạng L giản lược. DOLFINx giải đúng dạng ta đưa vào; **nó không tự chọn mô hình vật lý hoặc sửa phương trình cho ta**.
+
+**File material-point đã viết nằm hoàn toàn ở phần code vật liệu.** Nó chưa dùng DOLFINx vì chưa có lưới hay phương trình cân bằng. Khi đưa vào FEM, ta phải phát triển thêm cập nhật vật liệu dưới biến dạng chưa biết, rồi gọi cập nhật đó tại các điểm tích phân trong quá trình giải.

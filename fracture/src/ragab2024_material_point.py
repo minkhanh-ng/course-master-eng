@@ -12,7 +12,9 @@ structural fracture time. No plasticity, elasticity solve, stiffness loss,
 phase-field PDE, or spatial stress redistribution is included here.
 At this stage sigma == sigma_prime: the input is a prescribed, symmetric
 3D stress tensor in an undegraded material. That convention must be revisited
-when coupling to d. No Poisson ratio or hardening law is assumed.
+when coupling to d. (Which mean sigma_prime = sigma / (1 - d) not implemented here yet).
+
+No Poisson ratio or hardening law is assumed.
 
 Cocks-Ashby is restricted here to nonnegative mean stress. At eta=0 its
 infinite-ductility limit gives zero damage rate. Pure hydrostatic stress
@@ -67,14 +69,15 @@ def invariants(sigma):
     if not np.allclose(sigma, sigma.T, rtol=0, atol=1e-12):
         raise ValueError("Stress tensor must be symmetric.")
     mean = float(np.trace(sigma) / 3)
-    s = sigma - mean * np.eye(3)
+    s = sigma - mean * np.eye(3)  # deviatoric part
     seq = float(np.sqrt(1.5 * np.sum(s * s)))
     return sigma, mean, s, seq
 
 
 def rates(sigma, mat=Material()):
     """Return tensor creep rate, equivalent rate, damage rate, creep power.
-
+    
+    Implementing Cocks-Ashby creep law.
     Damage is computed using the inverse ductility factor, avoiding a
     division by sinh(0) at zero triaxiality.
     """
@@ -85,15 +88,17 @@ def rates(sigma, mat=Material()):
         return np.zeros((3, 3)), 0.0, 0.0, 0.0
     eta = max(mean, 0.0) / seq
     a = (mat.n - 0.5) / (mat.n + 0.5)
+    
     with np.errstate(over="raise", invalid="raise"):
         req = mat.A * seq ** mat.n
         eps_dot = 1.5 * req * s / seq
-        inv_ductility_factor = np.sinh(2 * a * eta) / np.sinh(2 * a / 3)
+        inv_ductility_factor = np.sinh(2 * a * eta) / np.sinh(2 * a / 3) # Cocks-Ashby creep law parameters
         D_dot = req * inv_ductility_factor / mat.eps_f
-        power = float(np.sum(sigma * eps_dot))
-    if not np.all(np.isfinite([req, D_dot, power])):
+        sigma_prime = sigma  # effective stress considering damage (not fully implemented)
+        creep_work = float(np.sum(sigma_prime * eps_dot)) # sigma
+    if not np.all(np.isfinite([req, D_dot, creep_work])):
         raise ValueError("Rates overflow; inspect stress and units.")
-    return eps_dot, req, float(D_dot), power
+    return eps_dot, req, float(D_dot), creep_work
 
 
 def beta(D, mat=Material()):
@@ -125,6 +130,8 @@ def uniaxial(sigma):
 
 
 def integrate(stress_history, end_time, steps, mat=Material()):
+    # Tích phân thời gian bậc 2 (trapezoidal) cho bài toán creep material point với ứng suất áp đặt, 
+    # trả về toàn bộ lịch sử trạng thái để phân tích
     if not np.isfinite(end_time) or end_time <= 0 or steps < 1:
         raise ValueError("Need positive duration and at least one step.")
     times = np.linspace(0, end_time, steps + 1)
@@ -137,7 +144,9 @@ def integrate(stress_history, end_time, steps, mat=Material()):
 
 def verify(mat=Material()):
     """Independent analytic checks; raises if any verification fails."""
+    # ------------------------------------------------------------------
     # Uniaxial constant stress: all components, damage and work have closed forms.
+    # Tích phân duration = 24 h với ứng suất uniaxial không đổi 82 MPa, 48 bước.
     stress, duration = 82.0, 24.0
     hist = integrate(lambda t: uniaxial(stress), duration, 48, mat)
     e = mat.A * stress ** mat.n * duration
@@ -148,16 +157,22 @@ def verify(mat=Material()):
     assert abs(np.trace(hist[-1].eps_cr)) < 1e-14
     assert all(a.D <= b.D for a, b in zip(hist[:-1], hist[1:]))
     # Hydrostatic addition leaves Norton creep unchanged, increases tensile damage.
+    # Check whether hydrostatic stress affect the deviatoric creep rate? by adding a hydrostatic component 40MPa.
     r_low = rates(uniaxial(stress), mat)
     r_high = rates(uniaxial(stress) + 40 * np.eye(3), mat)
     np.testing.assert_allclose(r_high[0], r_low[0], rtol=1e-12, atol=1e-15)
     assert r_high[2] > r_low[2]
+    # assert là câu lệnh trong Python dùng để kiểm tra một điều kiện phải đúng trong lúc chạy chương trình.
+    # Nếu điều kiện đúng, chương trình chạy tiếp bình thường. Nếu sai, Python ném ra lỗi AssertionError và dừng chương trình.
+    
     # A pure trial update must not alter committed history or accumulate twice.
     old = initial_state()
     a = trial_step(old, uniaxial(stress), uniaxial(stress), 1, mat)
     b = trial_step(old, uniaxial(stress), uniaxial(stress), 1, mat)
     assert old.D == 0 and np.count_nonzero(old.eps_cr) == 0
     np.testing.assert_array_equal(a.eps_cr, b.eps_cr)
+
+   # ------------------------------------------------------------------
     # Nonconstant load: linear stress ramp has an independent analytic integral.
     s0, s1, T = 60.0, 100.0, 24.0
     exact_e = mat.A * T * (s1 ** (mat.n + 1) - s0 ** (mat.n + 1)) / (
@@ -196,7 +211,7 @@ def main():
     parser.add_argument("--stress", type=float, default=82.0, help="uniaxial tensile MPa")
     parser.add_argument("--hours", type=float, default=24.0)
     parser.add_argument("--steps", type=int, default=48)
-    parser.add_argument("--output", type=Path, default=Path("material_point.csv"))
+    parser.add_argument("--output", type=Path, default=Path("results/material_point.csv"))
     parser.add_argument("--plot", action="store_true")
     args = parser.parse_args()
     if args.stress <= 0:
