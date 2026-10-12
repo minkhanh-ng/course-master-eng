@@ -74,7 +74,7 @@ Dùng mm–N–MPa–giờ xuyên suốt. Không lấy nguyên A với thời gi
 | T | 650 °C | Ragab 2024, Bảng 2 |
 | E | 132000 MPa | Bảng 2 |
 | Sy | 262 MPa | Bảng 2; chưa đủ để xác định hardening |
-| A | 1.762e-14 MPa^(-n) h^(-1) | Bảng 2; fit tốc độ creep trung bình |
+| A | 1.762e-14 $MPa^{(-n)} h^{(-1)}$ | Bảng 2; fit tốc độ creep trung bình |
 | n | 5.58 | Bảng 2 |
 | eps_f | 0.28 | Bảng 2 |
 | Gc0 | 100 N/mm | Bảng 2; giá trị đã hiệu chỉnh |
