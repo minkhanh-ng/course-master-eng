@@ -175,11 +175,18 @@ Chuyển thành dạng chính tắc:
 
 1. **Bước 1 (Lập Bảng Đơn hình ban đầu):**
    * Các biến bù \(s_1, s_2, \dots, s_m\) tạo thành Hệ biến cơ sở ban đầu (Initial Basic Variables) với các cột đơn vị.
+      ***Note***
+      Thuật toán Đơn hình (Simplex) về bản chất là thuật toán đại số tuyến tính, nó chỉ giải được hệ phương trình (có dấu ==). Nó hoàn toàn "mù tịt" với các bất phương trình (dấu $\le$ hoặc $\ge$).
+
+      Bài toán gốc: $x_1 \le 4x_1 \le 4$
+
+      Để biến nó thành phương trình, ta thêm một lượng dương $s_1​≥0$ vào: $x_1+s_1=4$.
+      Lúc này $s_1$​ đóng vai trò là "phần còn trống" để bù vào cho đủ 4.
    * Hàng đánh giá (Hàng \(Z\) hay Reduced Costs): \(C_j = c_j - z_j\) hoặc biểu diễn dòng mục tiêu dưới dạng \(Z - \sum c_j x_j = 0\).
 2. **Bước 2 (Kiểm tra Điều kiện Tối ưu):**
    * Bài toán Maximize: Nếu tất cả các hệ số trên dòng \(Z\) tương ứng với các biến không cơ sở đều \(\ge 0\) (hoặc mọi chỉ số \(c_j - z_j \le 0\) tùy theo ký hiệu quy ước), phương án hiện tại là Tối ưu. Dừng thuật toán.
 3. **Bước 3 (Chọn Biến vào cơ sở - Entering Variable):**
-   * Chọn biến có hệ số âm nhất trên dòng \(Z\) (hoặc \(c_j - z_j\) dương lớn nhất) làm biến vào cơ sở. Cột tương ứng gọi là Cột xoay (Pivot Column).
+   * Chọn biến có hệ số âm nhất **(chỉ) trên dòng \(Z\)** (hoặc \(c_j - z_j\) dương lớn nhất) làm biến vào cơ sở. Cột tương ứng gọi là Cột xoay (Pivot Column).
 4. **Bước 4 (Chọn Biến ra khỏi cơ sở - Leaving Variable):**
    * Áp dụng Quy tắc Tỷ số Tối thiểu (Minimum Ratio Test) để xác định biến phải rời khỏi cơ sở:
      \[
@@ -225,8 +232,8 @@ Chuyển thành dạng chính tắc:
 | \(s_2\) | 0 | 0 | **2** | 0 | 1 | 0 | 12 | 12 / 2 = 6 \(\leftarrow\) Min |
 | \(s_3\) | 0 | 3 | 2 | 0 | 0 | 1 | 18 | 18 / 2 = 9 |
 
-* **Cột xoay:** Cột \(x_2\) (hệ số âm nhất trên dòng \(Z\) là -5). Biến \(x_2\) vào cơ sở.
-* **Tỷ số:** \(\theta = \min \{12/2, 18/2\} = 6\) tại hàng \(s_2\). Phần tử xoay là 2 (ô hàng \(s_2\), cột \(x_2\)). Biến \(s_2\) ra khỏi cơ sở.
+* **Cột xoay:** Cột \(x_2\) (hệ số âm nhất trên dòng \(Z\) là -5). **Chọn Biến \(x_2\) vào cơ sở.**
+* **Tỷ số:** \(\theta = \min \{12/2, 18/2\} = 6\) tại hàng \(s_2\). Phần tử xoay là 2 (ô hàng \(s_2\), cột \(x_2\)). Biến \(s_2\) ra khỏi cơ sở. (mẫu số là hệ số của biến đang chọn vào cơ sở)
 * **Biến đổi Gauss-Jordan:**
   * Hàng \(s_2\) mới = Hàng \(s_2\) cũ / 2 \(\implies [0, 0, 1, 0, 0.5, 0, 6]\).
   * Hàng \(Z\) mới = Hàng \(Z\) cũ + 5 \(\times\) Hàng xoay mới.
@@ -237,9 +244,9 @@ Chuyển thành dạng chính tắc:
 | Biến CS | \(Z\) | \(x_1\) | \(x_2\) | \(s_1\) | \(s_2\) | \(s_3\) | Phương án (\(b\)) | Tỷ số \(\theta\) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | **Z** | 1 | **-3** | 0 | 0 | 2.5 | 0 | 30 | — |
-| \(s_1\) | 0 | **1** | 0 | 1 | 0 | 0 | 4 | 4 / 1 = 4 \(\leftarrow\) Min |
+| \(s_1\) | 0 | **1** | 0 | 1 | 0 | 0 | 4 | 4 / 1 = 4 |
 | \(x_2\) | 0 | 0 | 1 | 0 | 0.5 | 0 | 6 | 6 / 0 (Không xét) |
-| \(s_3\) | 0 | **3** | 0 | 0 | -1 | 1 | 6 | 6 / 3 = 2 |
+| \(s_3\) | 0 | **3** | 0 | 0 | -1 | 1 | 6 | 6 / 3 = 2 \(\leftarrow\) Min |
 
 * **Kiểm tra dòng \(Z\):** Còn hệ số âm -3 tại cột \(x_1\). Cột xoay là cột \(x_1\). Biến \(x_1\) vào cơ sở.
 * **Tỷ số:** \(\theta = \min \{4/1, 6/3\} = 2\) tại hàng \(s_3\). Phần tử xoay là 3 (ô hàng \(s_3\), cột \(x_1\)). Biến \(s_3\) ra khỏi cơ sở.
@@ -262,6 +269,9 @@ Chuyển thành dạng chính tắc:
 x_1^* = 2, \quad x_2^* = 6, \quad s_1^* = 2, \quad s_2^* = 0, \quad s_3^* = 0
 \]
   Giá trị hàm mục tiêu tối ưu: **\(Z_{\max} = 36\)**
+
+  ***Note***
+  Điều này có nghĩa là: Để đạt lợi nhuận cao nhất, chỉ cần sản xuất 2 đơn vị sản phẩm (dùng 2 giờ máy), và dư ra 2 giờ máy chưa dùng đến (đó chính là $s_1=2$).
 
 ---
 
